@@ -1,0 +1,5 @@
+CONSTANTENUMERO = 2;
+CONSTANTSTRING = "teste";
+
+
+
