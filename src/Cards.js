@@ -1,30 +1,49 @@
 import styled from "styled-components";
-import listaPerguntas from "./listaPerguntas";
 import React from "react";
 /* import GlobalStyle from "./GlobalStyle"; */ //usando pelo display-none
 
-function clickCardPergunta(i, setPerguntasClicadas, perguntasClicadas) {
-  perguntasClicadas = [];//quero elemento clicado, vou precisar de todos elementos clicados
-  const arrayClicados = [...perguntasClicadas, i];
-  if (!perguntasClicadas.includes(i)) { setPerguntasClicadas(arrayClicados) };
-  console.log(perguntasClicadas);
+
+function fechaOutrosCards(listaPerguntas) {
+  listaPerguntas.forEach((n) => {
+    n.aberto = false;
+  });
+
+  console.log(listaPerguntas);
 }
 
-function mostraPergunta(pergunta) {
-  return pergunta;
+function clickCard(i, setPerguntasClicadas, perguntasClicadas, listaPerguntas) {
+  perguntasClicadas = [];
+
+  if (!perguntasClicadas.includes(i)) { setPerguntasClicadas([...perguntasClicadas, i]) };
+
+  fechaOutrosCards(listaPerguntas);
+
+  listaPerguntas[i].aberto === false ? listaPerguntas[i].aberto = true : listaPerguntas[i].aberto = false;
+
 }
 
-function mostraResposta(resposta) {
-  return resposta;
-}
 
-function mostraPerguntaResposta(props, i, card) {
+
+function mostraPerguntaResposta(listaPerguntas, props, i, card) {
   if (props.perguntasClicadas.includes(i) && props.perguntasClicadas.length === 1) {
     return card.resposta;
 
   } else {
     return card.pergunta;
   }
+}
+
+function mostrarIcone(i, listaPerguntas) {
+
+
+  {/* close-circle help-circle checkmark-circle play-outline*/ }
+  return (
+    <Icone cor={listaPerguntas[i].icone_name}>
+      <ion-icon class="" name={listaPerguntas[i].icone_name}></ion-icon>
+    </Icone>
+  );
+
+
 }
 
 export default function Cards(props) {//Perguntas({setpPerguntasClicadas, perguntasClicadas})
@@ -34,21 +53,19 @@ export default function Cards(props) {//Perguntas({setpPerguntasClicadas, pergun
 
     <ContainerFlashCard>
       {/* <GlobalStyle></GlobalStyle> */}
-      {listaPerguntas.map((card, i) =>
+      {props.listaPerguntas.map((card, i) =>
         <Flashcard
-          className={props.perguntasClicadas.includes(i) ? "aberto" : ""}
+          className={props.perguntasClicadas.includes(i) === true ? "aberto" : ""}
           key={i}
-          onClick={() => clickCardPergunta(i, props.setPerguntasClicadas, props.perguntasClicadas)}>
-          <ContentCard>
-            {mostraPerguntaResposta(props, i, card)};
-            
-            {/* close-circle help-circle checkmark-circle */}
-            { <ion-icon  name="play-outline"></ion-icon>}
+          onClick={() => clickCard(i, props.setPerguntasClicadas, props.perguntasClicadas, props.listaPerguntas)}>
+          <ContentCard className = {props.listaPerguntas[i].icone_name}>
+            {mostraPerguntaResposta(props.listaPerguntas, props, i, card)}
+            {mostrarIcone(i, props.listaPerguntas)}
           </ContentCard>
         </Flashcard>
       )}
-      </ContainerFlashCard>
-    );
+    </ContainerFlashCard>
+  );
 }
 
 const ContentCard = styled.div`
@@ -58,10 +75,29 @@ const ContentCard = styled.div`
   align-items:center;
   justify-content:space-between;
 
+
+/* close-circle help-circle checkmark-circle play-outline */
+
+&.checkmark-circle {
+  color: var(--cor-zap);
+  text-decoration: line-through;
+}
+
+&.help-circle {
+  color: var(--cor-quase-nao-lembrei);
+  text-decoration: line-through;
+}
+
+&.close-circle {
+  color: var(--cor-nao-lembrei);
+  text-decoration: line-through;
+}
+
+
 `
 
 const ContainerFlashCard = styled.div`
-  margin-top:80px;  
+  margin: 80px 0px 120px 0px;  
 `
 
 const Flashcard = styled.div`
@@ -78,22 +114,6 @@ const Flashcard = styled.div`
   padding: 10px 10px;
   cursor: pointer;
   font-family: 'Recursive', cursive;
-
-
-&.acerto {
-  color: var(--cor-zap);
-  text-decoration: line-through;
-}
-
-&.help {
-  color: var(--cor-quase-nao-lembrei);
-  text-decoration: line-through;
-}
-
-&.erro {
-  color: var(--cor-nao-lembrei);
-  text-decoration: line-through;
-}
 
 
 &.aberto {
@@ -124,4 +144,42 @@ const Flashcard = styled.div`
   cursor: pointer;
 }
 
+`
+
+const Icone = styled.div`
+  color: var(--preto);
+  width: 23px;
+  height: 23px;
+
+  /* close-circle help-circle checkmark-circle play-outline */
+/* 
+.close-circle{
+  color: var(--nao-lembrei);  
+}
+
+ .help-circle {
+  color: var(--cor-quase-nao-lembrei);
+}
+
+.checkmark-circle {
+  color: var(--cor-zap);
+} */
+
+/* cor dos icones dos cards */
+&:first-child{
+  color:${props => {
+    if (props.cor === "close-circle") {
+      return "red;"
+    } else if (props.cor === "help-circle") {
+      return "var(--cor-quase-nao-lembrei);"
+    } if (props.cor === "checkmark-circle") {
+      return "var(--cor-zap)";
+    }
+  }};
+
+
+
+
+
+}
 `

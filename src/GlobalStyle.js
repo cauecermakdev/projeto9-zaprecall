@@ -26,6 +26,8 @@ body {
   background-color:var(--cor-fundo);
 }
 
+
+
 `;
 
 export default GlobalStyle;

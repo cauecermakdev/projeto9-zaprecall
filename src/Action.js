@@ -1,13 +1,53 @@
 import styled from "styled-components";
+import listaPerguntas from "./listaPerguntas";
 
-export default function Action(){
-    return(
-        <Action_footer className="footer">
-                <ButtonContainer>
-                    <Button className="error">Não lembrei</Button>  
-                    <Button className="almost">Quase não lembrei</Button>
-                    <Button className="zap">Zap!</Button>
+function doNothing(){
+    return;
+}
+
+function buscaCardAberto(listaPerguntas){
+    let cardAberto = -1;
+    listaPerguntas.forEach((n,i) => n.aberto === true ? cardAberto = i :  doNothing());
+    return cardAberto;
+}
+
+function botaClicado(nameIcone, setNomeIcone, listaPerguntas,perguntasClicadas,setPerguntasClicadas) {
+    //busca o card aberto
+    let indice_card_aberto = buscaCardAberto(listaPerguntas);
+
+    //coloca nome do icone no objeto
+    listaPerguntas[indice_card_aberto].icone_name = nameIcone;
+
+    setNomeIcone(nameIcone);
+
+    //fecha botao
+    perguntasClicadas =[];
+    setPerguntasClicadas(perguntasClicadas);
+}
+
+function numeroRespondidas(listaPerguntas){
+    let numeroDePerguntasRespondidas = 0;
+
+    listaPerguntas.forEach((n)=> 
+        n.icone_name !== "play-outline"?numeroDePerguntasRespondidas++:doNothing()
+    );
+ 
+    return numeroDePerguntasRespondidas;
+}
+
+
+export default function Action(props) {
+    return (
+        <Action_footer >
+            <div className="footer">
+                <ButtonContainer >
+                    {/* close-circle help-circle checkmark-circle */}
+                    <Button className="error" onClick={() => botaClicado("close-circle", props.setNomeIcone,props.listaPerguntas,props.perguntasClicadas,props.setPerguntasClicadas)}>Não lembrei</Button>
+                    <Button className="almost" onClick={() => botaClicado("help-circle", props.setNomeIcone,props.listaPerguntas,props.perguntasClicadas,props.setPerguntasClicadas)} >Quase não lembrei</Button>
+                    <Button className="zap" onClick={() => botaClicado("checkmark-circle", props.setNomeIcone,props.listaPerguntas,props.perguntasClicadas,props.setPerguntasClicadas)}>Zap!</Button>
                 </ButtonContainer>
+                <Result>{numeroRespondidas(props.listaPerguntas)}/{props.listaPerguntas.length} CONCLUÍDOS</Result>
+            </div>
         </Action_footer>
     );
 }
@@ -21,7 +61,6 @@ const Action_footer = styled.div`
     align-items: center;
     gap: 10px;
 
-  
 
     .footer {
     width:100%;
@@ -40,7 +79,9 @@ const Action_footer = styled.div`
     text-align: center;
     display: flex;
     flex-direction: column;
+    align-items:center;
     gap: 20px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     }
 
 
@@ -83,3 +124,6 @@ const Button = styled.div`
     }
 `
 
+const Result = styled.div`
+    opacity:0.8;
+`

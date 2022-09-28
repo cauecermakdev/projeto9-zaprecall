@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Action from "./Action";
 import GlobalStyle from "./GlobalStyle";
 import Cards from "./Cards";
+import listaPerguntas from "./listaPerguntas";
 
 import logo from "./assets/img/logo.png";
 
@@ -12,7 +13,7 @@ export default function App() {
     const [listaRespostasNao,setListaRespostasNao] = React.useState([]);  
     const [listaRespostasQuaseNao,setListaRespostasQuaseNao] = React.useState([]);  
     const [listaRespostasZap,setListaRespostasZap] = React.useState([]);  
-
+    const [nomeIcone,setNomeIcone] = React.useState("play-outline");
 
     return (
         <Deck>
@@ -22,9 +23,9 @@ export default function App() {
                     <h1>ZapRecall</h1>
             </Header>
 
-            <Cards perguntasClicadas = {perguntasClicadas} setPerguntasClicadas = {setPerguntasClicadas}/>
-            <Action />
-
+            <Cards  listaPerguntas = {listaPerguntas} perguntasClicadas = {perguntasClicadas} setPerguntasClicadas = {setPerguntasClicadas} /* nomeBotao ={nomeBotao} *//>
+            <Action listaPerguntas ={listaPerguntas} setNomeIcone ={setNomeIcone} perguntasClicadas = {perguntasClicadas} setPerguntasClicadas = {setPerguntasClicadas}/>
+            
         </Deck>
     )
 
@@ -32,7 +33,6 @@ export default function App() {
 
 const Header = styled.div`
 
-    
      img {
         width: 52px;
         height: 60px;
