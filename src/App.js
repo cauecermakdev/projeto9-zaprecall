@@ -16,6 +16,7 @@ export default function App() {
     const [listaRespostasZap, setListaRespostasZap] = React.useState([]);
     const [nomeIcone, setNomeIcone] = React.useState("play-outline");
     const [logado, setLogado] = React.useState(false);
+    const [apresentaResposta,setApresentaResposta] = React.useState(false);
 
     if (logado) {
         return (
@@ -26,8 +27,8 @@ export default function App() {
                     <h1>ZapRecall</h1>
                 </Header>
 
-                <Cards listaPerguntas={listaPerguntas} setNomeIcone={setNomeIcone} perguntasClicadas={perguntasClicadas} setPerguntasClicadas={setPerguntasClicadas} /* nomeBotao ={nomeBotao} */ />
-                <Action listaPerguntas={listaPerguntas} setNomeIcone={setNomeIcone} perguntasClicadas={perguntasClicadas} setPerguntasClicadas={setPerguntasClicadas} /> 
+                <Cards listaPerguntas={listaPerguntas} setNomeIcone={setNomeIcone} perguntasClicadas={perguntasClicadas} setPerguntasClicadas={setPerguntasClicadas} apresentaResposta={apresentaResposta} setApresentaResposta={setApresentaResposta}/> 
+                <Action listaPerguntas={listaPerguntas} setNomeIcone={setNomeIcone} perguntasClicadas={perguntasClicadas} setPerguntasClicadas={setPerguntasClicadas} apresentaResposta={apresentaResposta} setApresentaResposta={setApresentaResposta}/> 
                 <Result listaPerguntas= {listaPerguntas} />
             </Deck>
         )

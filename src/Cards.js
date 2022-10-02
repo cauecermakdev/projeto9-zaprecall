@@ -3,7 +3,7 @@ import React from "react";
 import Action from "./Action";
 /* import GlobalStyle from "./GlobalStyle"; */ //usando pelo display-none
 
-function doNothing(){
+function doNothing() {
   return;
 }
 
@@ -12,47 +12,55 @@ function fechaOutrosCards(listaPerguntas) {
     n.aberto = false;
   });
 
-  
+
 }
 
 function clickCard(i, setPerguntasClicadas, perguntasClicadas, listaPerguntas) {
- listaPerguntas[i].icone_name = "";
-  console.log(listaPerguntas[i].icone_name); 
+  
+  listaPerguntas[i].icone_name = "";
+  console.log(listaPerguntas[i].icone_name);
   perguntasClicadas = [];
 
   if (!perguntasClicadas.includes(i)) { setPerguntasClicadas([...perguntasClicadas, i]) };
 
   fechaOutrosCards(listaPerguntas);
-
+  
   listaPerguntas[i].aberto === false ? listaPerguntas[i].aberto = true : listaPerguntas[i].aberto = false;
+}
 
+function mostrarResposta(card,apresentaResposta,setApresentaResposta){
+  const boolMostraResposta = true;
+  setApresentaResposta(boolMostraResposta);
 }
 
 
+function mostraPerguntaResposta(listaPerguntas, props, i, card,apresentaResposta,setApresentaResposta) {
+  if(apresentaResposta === true && card.aberto == true){
+    return card.resposta;
+  }
 
-function mostraPerguntaResposta(listaPerguntas, props, i, card) {
-  
   if (props.perguntasClicadas.includes(i) && props.perguntasClicadas.length === 1) {
-    
+
     return (
-      card.resposta
-      );
+      card.pergunta
+    );
 
   } else {
-    return card.pergunta;
+    /* return card.pergunta; */
+    return `Pergunta ${i}`;
   }
 }
 
 function mostrarIcone(i, listaPerguntas) {
 
-  if(listaPerguntas[i].icone_name !== ""){
-  {/* close-circle help-circle checkmark-circle play-outline*/ }
-  return (
-    <Icone cor = {listaPerguntas[i].icone_name}>
-      <ion-icon class="" name={listaPerguntas[i].icone_name}></ion-icon>
-    </Icone>
-  );
-  }else{
+  if (listaPerguntas[i].icone_name !== "") {
+    {/* close-circle help-circle checkmark-circle play-outline*/ }
+    return (
+      <Icone cor={listaPerguntas[i].icone_name}>
+        <ion-icon class="" name={listaPerguntas[i].icone_name}></ion-icon>
+      </Icone>
+    );
+  } else {
     return;
   }
 
@@ -60,8 +68,30 @@ function mostrarIcone(i, listaPerguntas) {
 
 
 
-export default function Cards(props) {//Perguntas({setpPerguntasClicadas, perguntasClicadas})
+function mostrarIconeMostraResposta(i, listaPerguntas, perguntasClicadas,card,apresentaResposta,setApresentaResposta) {
   
+  if (perguntasClicadas.includes(i) == true) {
+    return (
+      <ContainerIconeVira >
+        <Icone cor={listaPerguntas[i].icone_name} onClick={()=> mostrarResposta(card,apresentaResposta,setApresentaResposta)}>
+          <ion-icon class="repeat" name="repeat"></ion-icon>
+        </Icone>
+      </ContainerIconeVira>
+    );
+  } else {
+    return;
+  }
+
+  /*  */
+
+}
+
+
+
+
+export default function Cards(props) {//Perguntas({setpPerguntasClicadas, perguntasClicadas})
+
+
   return (
 
     <ContainerFlashCard>
@@ -71,11 +101,19 @@ export default function Cards(props) {//Perguntas({setpPerguntasClicadas, pergun
           className={props.perguntasClicadas.includes(i) === true ? "aberto" : ""}
           key={i}
           onClick={() => clickCard(i, props.setPerguntasClicadas, props.perguntasClicadas, props.listaPerguntas)}>
-          <ContentCard className = {props.listaPerguntas[i].icone_name}>
-            {mostraPerguntaResposta(props.listaPerguntas, props, i, card)}
+          <ContentCard className={props.listaPerguntas[i].icone_name}>
+            {mostraPerguntaResposta(props.listaPerguntas, props, i, card,props.apresentaResposta,props.setApresentaResposta)}
             {mostrarIcone(i, props.listaPerguntas)}
           </ContentCard>
+          {/* {iconeResposta(i,props.listaPerguntas,props.perguntasClicadas)} */}
+
+      {/*     <ContainerIconeVira i={i}  listaPerguntas={props.listaPerguntas}>
+            aqui */}
+            {mostrarIconeMostraResposta(i, props.listaPerguntas, props.perguntasClicadas,card,props.apresentaResposta,props.setApresentaResposta)}
+        {/*   </ContainerIconeVira> */}
+
         </Flashcard>
+
       )}
     </ContainerFlashCard>
   );
@@ -160,6 +198,7 @@ const Flashcard = styled.div`
 `
 
 const Icone = styled.div`
+
   color: var(--preto);
   width: 23px;
   height: 23px;
@@ -178,6 +217,7 @@ const Icone = styled.div`
   color: var(--cor-zap);
 } */
 
+
 /* cor dos icones dos cards */
 &:first-child{
   color:${props => {
@@ -190,9 +230,13 @@ const Icone = styled.div`
     }
   }};
 
-
-
-
-
 }
+`
+
+const ContainerIconeVira = styled.div`
+  width:100%;
+  display:flex;
+  justify-content:flex-end;
+  padding-right:10px;
+
 `

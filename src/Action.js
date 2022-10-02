@@ -19,7 +19,7 @@ function buscaCardAberto(listaPerguntas){
     return cardAberto;
 }
 
-function botaClicado(nameIcone, setNomeIcone, listaPerguntas,perguntasClicadas,setPerguntasClicadas) {
+function botaClicado(nameIcone, setNomeIcone, listaPerguntas,perguntasClicadas,setPerguntasClicadas,setApresentaResposta) {
     //busca o card aberto
     let indice_card_aberto = buscaCardAberto(listaPerguntas);
     
@@ -31,6 +31,7 @@ function botaClicado(nameIcone, setNomeIcone, listaPerguntas,perguntasClicadas,s
 
     perguntasClicadas =[];
     setPerguntasClicadas(perguntasClicadas);
+    setApresentaResposta(false);
     /* fechaOutrosCards(listaPerguntas); */
 }
 
@@ -42,9 +43,9 @@ export default function Action(props) {
             <div className="footer">
                 <ButtonContainer >
                     {/* close-circle help-circle checkmark-circle */}
-                    <Button className="error" onClick={() => botaClicado("close-circle", props.setNomeIcone,props.listaPerguntas,props.perguntasClicadas,props.setPerguntasClicadas)}>Não lembrei</Button>
-                    <Button className="almost" onClick={() => botaClicado("help-circle", props.setNomeIcone,props.listaPerguntas,props.perguntasClicadas,props.setPerguntasClicadas)} >Quase não lembrei</Button>
-                    <Button className="zap" onClick={() => botaClicado("checkmark-circle", props.setNomeIcone,props.listaPerguntas,props.perguntasClicadas,props.setPerguntasClicadas)}>Zap!</Button>
+                    <Button className="error" onClick={() => botaClicado("close-circle", props.setNomeIcone,props.listaPerguntas,props.perguntasClicadas,props.setPerguntasClicadas,props.setApresentaResposta)}>Não lembrei</Button>
+                    <Button className="almost" onClick={() => botaClicado("help-circle", props.setNomeIcone,props.listaPerguntas,props.perguntasClicadas,props.setPerguntasClicadas,props.setApresentaResposta)} >Quase não lembrei</Button>
+                    <Button className="zap" onClick={() => botaClicado("checkmark-circle", props.setNomeIcone,props.listaPerguntas,props.perguntasClicadas,props.setPerguntasClicadas,props.setApresentaResposta)}>Zap!</Button>
                 </ButtonContainer>
                 {/* <Result>{numeroRespondidas(props.listaPerguntas)}/{props.listaPerguntas.length} CONCLUÍDOS</Result> */}
             </div>
