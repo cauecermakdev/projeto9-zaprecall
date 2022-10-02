@@ -4,6 +4,7 @@ import Action from "./Action";
 import GlobalStyle from "./GlobalStyle";
 import Cards from "./Cards";
 import listaPerguntas from "./listaPerguntas";
+import Result from "./Result";
 
 import logo from "./assets/img/logo.png";
 
@@ -25,9 +26,9 @@ export default function App() {
                     <h1>ZapRecall</h1>
                 </Header>
 
-                <Cards listaPerguntas={listaPerguntas} perguntasClicadas={perguntasClicadas} setPerguntasClicadas={setPerguntasClicadas} /* nomeBotao ={nomeBotao} */ />
-                <Action listaPerguntas={listaPerguntas} setNomeIcone={setNomeIcone} perguntasClicadas={perguntasClicadas} setPerguntasClicadas={setPerguntasClicadas} />
-
+                <Cards listaPerguntas={listaPerguntas} setNomeIcone={setNomeIcone} perguntasClicadas={perguntasClicadas} setPerguntasClicadas={setPerguntasClicadas} /* nomeBotao ={nomeBotao} */ />
+                <Action listaPerguntas={listaPerguntas} setNomeIcone={setNomeIcone} perguntasClicadas={perguntasClicadas} setPerguntasClicadas={setPerguntasClicadas} /> 
+                <Result listaPerguntas= {listaPerguntas} />
             </Deck>
         )
     } else {

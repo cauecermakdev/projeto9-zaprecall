@@ -1,6 +1,14 @@
 import styled from "styled-components";
 import listaPerguntas from "./listaPerguntas";
 
+function fechaOutrosCards(listaPerguntas) {
+    listaPerguntas.forEach((n) => {
+      n.aberto = false;
+    });
+  
+    
+  }
+
 function doNothing(){
     return;
 }
@@ -14,26 +22,18 @@ function buscaCardAberto(listaPerguntas){
 function botaClicado(nameIcone, setNomeIcone, listaPerguntas,perguntasClicadas,setPerguntasClicadas) {
     //busca o card aberto
     let indice_card_aberto = buscaCardAberto(listaPerguntas);
-
+    
     //coloca nome do icone no objeto
-    listaPerguntas[indice_card_aberto].icone_name = nameIcone;
+    if(indice_card_aberto!==-1){
+        listaPerguntas[indice_card_aberto].icone_name = nameIcone;
+        setNomeIcone(nameIcone);
+    }
 
-    setNomeIcone(nameIcone);
-
-    //fecha botao
     perguntasClicadas =[];
     setPerguntasClicadas(perguntasClicadas);
+    /* fechaOutrosCards(listaPerguntas); */
 }
 
-function numeroRespondidas(listaPerguntas){
-    let numeroDePerguntasRespondidas = 0;
-
-    listaPerguntas.forEach((n)=> 
-        n.icone_name !== "play-outline"?numeroDePerguntasRespondidas++:doNothing()
-    );
- 
-    return numeroDePerguntasRespondidas;
-}
 
 
 export default function Action(props) {
@@ -46,7 +46,7 @@ export default function Action(props) {
                     <Button className="almost" onClick={() => botaClicado("help-circle", props.setNomeIcone,props.listaPerguntas,props.perguntasClicadas,props.setPerguntasClicadas)} >Quase não lembrei</Button>
                     <Button className="zap" onClick={() => botaClicado("checkmark-circle", props.setNomeIcone,props.listaPerguntas,props.perguntasClicadas,props.setPerguntasClicadas)}>Zap!</Button>
                 </ButtonContainer>
-                <Result>{numeroRespondidas(props.listaPerguntas)}/{props.listaPerguntas.length} CONCLUÍDOS</Result>
+                {/* <Result>{numeroRespondidas(props.listaPerguntas)}/{props.listaPerguntas.length} CONCLUÍDOS</Result> */}
             </div>
         </Action_footer>
     );
@@ -60,7 +60,7 @@ const Action_footer = styled.div`
     justify-content: space-around;
     align-items: center;
     gap: 10px;
-
+    
 
     .footer {
     width:100%;
@@ -72,7 +72,7 @@ const Action_footer = styled.div`
     z-index: 1;
     width: 100%;
     min-height: 70px;
-    padding: 14px 10px;
+    padding: 14px 10px 40px 10px;
     font-size: 18px;
     color: black;
     position: fixed;
@@ -124,6 +124,6 @@ const Button = styled.div`
     }
 `
 
-const Result = styled.div`
+/* const Result = styled.div`
     opacity:0.8;
-`
+` */

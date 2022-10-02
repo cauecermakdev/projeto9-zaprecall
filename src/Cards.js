@@ -1,17 +1,23 @@
 import styled from "styled-components";
 import React from "react";
+import Action from "./Action";
 /* import GlobalStyle from "./GlobalStyle"; */ //usando pelo display-none
 
+function doNothing(){
+  return;
+}
 
 function fechaOutrosCards(listaPerguntas) {
   listaPerguntas.forEach((n) => {
     n.aberto = false;
   });
 
-  console.log(listaPerguntas);
+  
 }
 
 function clickCard(i, setPerguntasClicadas, perguntasClicadas, listaPerguntas) {
+ listaPerguntas[i].icone_name = "";
+  console.log(listaPerguntas[i].icone_name); 
   perguntasClicadas = [];
 
   if (!perguntasClicadas.includes(i)) { setPerguntasClicadas([...perguntasClicadas, i]) };
@@ -25,8 +31,12 @@ function clickCard(i, setPerguntasClicadas, perguntasClicadas, listaPerguntas) {
 
 
 function mostraPerguntaResposta(listaPerguntas, props, i, card) {
+  
   if (props.perguntasClicadas.includes(i) && props.perguntasClicadas.length === 1) {
-    return card.resposta;
+    
+    return (
+      card.resposta
+      );
 
   } else {
     return card.pergunta;
@@ -35,20 +45,23 @@ function mostraPerguntaResposta(listaPerguntas, props, i, card) {
 
 function mostrarIcone(i, listaPerguntas) {
 
-
+  if(listaPerguntas[i].icone_name !== ""){
   {/* close-circle help-circle checkmark-circle play-outline*/ }
   return (
-    <Icone cor={listaPerguntas[i].icone_name}>
+    <Icone cor = {listaPerguntas[i].icone_name}>
       <ion-icon class="" name={listaPerguntas[i].icone_name}></ion-icon>
     </Icone>
   );
-
+  }else{
+    return;
+  }
 
 }
 
+
+
 export default function Cards(props) {//Perguntas({setpPerguntasClicadas, perguntasClicadas})
-  /* const [clicado, setClicado] = React.useState(false); */
-  /* const {perguntasClicadas} = props; *///desestruturacao
+  
   return (
 
     <ContainerFlashCard>
