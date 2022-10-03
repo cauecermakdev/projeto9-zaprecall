@@ -38,7 +38,7 @@ export default function App() {
             <GlobalStyle />
                 <img src={logo} alt="logo"></img>
                 <h1>ZapRecall</h1>
-                <button onClick = {()=>setLogado(true)}>Iniciar Recall!</button>
+                <button data-identifier="start-btn" onClick = {()=>setLogado(true)}>Iniciar Recall!</button>
         </Home>
         );
     }

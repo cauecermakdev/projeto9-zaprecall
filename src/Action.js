@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import listaPerguntas from "./listaPerguntas";
+
 
 function fechaOutrosCards(listaPerguntas) {
     listaPerguntas.forEach((n) => {
@@ -43,9 +43,9 @@ export default function Action(props) {
             <div className="footer">
                 <ButtonContainer >
                     {/* close-circle help-circle checkmark-circle */}
-                    <Button className="error" onClick={() => botaClicado("close-circle", props.setNomeIcone,props.listaPerguntas,props.perguntasClicadas,props.setPerguntasClicadas,props.setApresentaResposta)}>Não lembrei</Button>
-                    <Button className="almost" onClick={() => botaClicado("help-circle", props.setNomeIcone,props.listaPerguntas,props.perguntasClicadas,props.setPerguntasClicadas,props.setApresentaResposta)} >Quase não lembrei</Button>
-                    <Button className="zap" onClick={() => botaClicado("checkmark-circle", props.setNomeIcone,props.listaPerguntas,props.perguntasClicadas,props.setPerguntasClicadas,props.setApresentaResposta)}>Zap!</Button>
+                    <Button data-identifier="forgot-btn" className="error" onClick={() => botaClicado("close-circle", props.setNomeIcone,props.listaPerguntas,props.perguntasClicadas,props.setPerguntasClicadas,props.setApresentaResposta)}>Não lembrei</Button>
+                    <Button data-identifier="almost-forgot-btn" className="almost" onClick={() => botaClicado("help-circle", props.setNomeIcone,props.listaPerguntas,props.perguntasClicadas,props.setPerguntasClicadas,props.setApresentaResposta)} >Quase não lembrei</Button>
+                    <Button data-identifier="zap-btn" className="zap" onClick={() => botaClicado("checkmark-circle", props.setNomeIcone,props.listaPerguntas,props.perguntasClicadas,props.setPerguntasClicadas,props.setApresentaResposta)}>Zap!</Button>
                 </ButtonContainer>
                 {/* <Result>{numeroRespondidas(props.listaPerguntas)}/{props.listaPerguntas.length} CONCLUÍDOS</Result> */}
             </div>

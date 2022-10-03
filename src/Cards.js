@@ -16,7 +16,7 @@ function fechaOutrosCards(listaPerguntas) {
 }
 
 function clickCard(i, setPerguntasClicadas, perguntasClicadas, listaPerguntas) {
-  
+
   listaPerguntas[i].icone_name = "";
   console.log(listaPerguntas[i].icone_name);
   perguntasClicadas = [];
@@ -24,25 +24,31 @@ function clickCard(i, setPerguntasClicadas, perguntasClicadas, listaPerguntas) {
   if (!perguntasClicadas.includes(i)) { setPerguntasClicadas([...perguntasClicadas, i]) };
 
   fechaOutrosCards(listaPerguntas);
-  
+
   listaPerguntas[i].aberto === false ? listaPerguntas[i].aberto = true : listaPerguntas[i].aberto = false;
 }
 
-function mostrarResposta(card,apresentaResposta,setApresentaResposta){
+function mostrarResposta(card, apresentaResposta, setApresentaResposta) {
   const boolMostraResposta = true;
   setApresentaResposta(boolMostraResposta);
 }
 
 
-function mostraPerguntaResposta(listaPerguntas, props, i, card,apresentaResposta,setApresentaResposta) {
-  if(apresentaResposta === true && card.aberto == true){
-    return card.resposta;
+function mostraPerguntaResposta(listaPerguntas, props, i, card, apresentaResposta, setApresentaResposta) {
+  if (apresentaResposta === true && card.aberto == true) {
+    return (
+      <div data-identifier="flashcard-answer">
+        {card.resposta}
+      </div>
+    )
   }
 
   if (props.perguntasClicadas.includes(i) && props.perguntasClicadas.length === 1) {
 
     return (
-      card.pergunta
+      <div data-identifier="flashcard-question">
+        {card.pergunta}
+      </div>
     );
 
   } else {
@@ -68,13 +74,13 @@ function mostrarIcone(i, listaPerguntas) {
 
 
 
-function mostrarIconeMostraResposta(i, listaPerguntas, perguntasClicadas,card,apresentaResposta,setApresentaResposta) {
-  
+function mostrarIconeMostraResposta(i, listaPerguntas, perguntasClicadas, card, apresentaResposta, setApresentaResposta) {
+
   if (perguntasClicadas.includes(i) == true) {
     return (
       <ContainerIconeVira >
-        <Icone cor={listaPerguntas[i].icone_name} onClick={()=> mostrarResposta(card,apresentaResposta,setApresentaResposta)}>
-          <ion-icon class="repeat" name="repeat"></ion-icon>
+        <Icone cor={listaPerguntas[i].icone_name} onClick={() => mostrarResposta(card, apresentaResposta, setApresentaResposta)}>
+          <ion-icon data-identifier="flashcard-turn-btn" class="repeat" name="repeat"></ion-icon>
         </Icone>
       </ContainerIconeVira>
     );
@@ -95,26 +101,25 @@ export default function Cards(props) {//Perguntas({setpPerguntasClicadas, pergun
   return (
 
     <ContainerFlashCard>
-      {/* <GlobalStyle></GlobalStyle> */}
+
       {props.listaPerguntas.map((card, i) =>
         <Flashcard
+
+          data-identifier="flashcard"
           className={props.perguntasClicadas.includes(i) === true ? "aberto" : ""}
           key={i}
           onClick={() => clickCard(i, props.setPerguntasClicadas, props.perguntasClicadas, props.listaPerguntas)}>
-          <ContentCard className={props.listaPerguntas[i].icone_name}>
-            {mostraPerguntaResposta(props.listaPerguntas, props, i, card,props.apresentaResposta,props.setApresentaResposta)}
+
+          <ContentCard data-identifier="flashcard-index-item" className={props.listaPerguntas[i].icone_name}>
+            {mostraPerguntaResposta(props.listaPerguntas, props, i, card, props.apresentaResposta, props.setApresentaResposta)}
             {mostrarIcone(i, props.listaPerguntas)}
           </ContentCard>
-          {/* {iconeResposta(i,props.listaPerguntas,props.perguntasClicadas)} */}
 
-      {/*     <ContainerIconeVira i={i}  listaPerguntas={props.listaPerguntas}>
-            aqui */}
-            {mostrarIconeMostraResposta(i, props.listaPerguntas, props.perguntasClicadas,card,props.apresentaResposta,props.setApresentaResposta)}
-        {/*   </ContainerIconeVira> */}
+          {mostrarIconeMostraResposta(i, props.listaPerguntas, props.perguntasClicadas, card, props.apresentaResposta, props.setApresentaResposta)}
 
         </Flashcard>
-
       )}
+
     </ContainerFlashCard>
   );
 }

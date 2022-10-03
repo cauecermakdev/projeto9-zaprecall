@@ -9,7 +9,7 @@ function numeroRespondidas(listaPerguntas){
     let numeroDePerguntasRespondidas = 0;
 
     listaPerguntas.forEach((n)=> 
-        n.icone_name !== "play-outline"?numeroDePerguntasRespondidas++:doNothing()
+        n.icone_name !== "play-outline" && n.icone_name !== ""  ?numeroDePerguntasRespondidas++:doNothing()
     );
  
     return numeroDePerguntasRespondidas;
@@ -18,7 +18,7 @@ function numeroRespondidas(listaPerguntas){
 export default function Result(props) {
     
     return (
-        <Resultado>
+        <Resultado data-identifier="flashcard-counter">
             {numeroRespondidas(props.listaPerguntas)}/{props.listaPerguntas.length} CONCLUÍDOS
         </Resultado>
     );
